@@ -5,14 +5,14 @@ import pandas as pd
 import math
 
 
-
+#read from csv
 df = pd.read_csv("/home/jomon/Downloads/test_Data(2).csv")
 
 df_filtered = df[df['unique_id'] != 0]
 df_filtered.to_csv('filtered_data.csv', index=False)
 
 file_path = 'new_file.csv'
-
+#create new csv
 with open(file_path, 'w') as file:
     pass
 
@@ -24,6 +24,7 @@ cluster = []
 fill_up= []
 position_dict= {}
 
+#checking for clusters
 for unique_time in timestamp_unique:
     for index, row in df_filtered[df_filtered['timestamp_id'] == unique_time].iterrows():
         for unique_id in unique_id_unique:
@@ -37,6 +38,7 @@ for unique_time in timestamp_unique:
             fill_up.append([unique_time, unique_id])
             cluster.append([row['x_position'], row['y_position'], row['sensor_id']])       
 
+#writing to new csv
 new_df = pd.DataFrame({
     'f_timestamp': [row[0] for row in fill_up],
     'f_id': [row[1] for row in fill_up],
